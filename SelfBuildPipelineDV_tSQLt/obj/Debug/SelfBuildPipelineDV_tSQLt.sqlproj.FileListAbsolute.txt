@@ -1,0 +1,12 @@
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\bin\Debug\SelfBuildPipelineDV_tSQLt.dacpac
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\bin\Debug\SelfBuildPipelineDV_tSQLt.dll
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\bin\Debug\SelfBuildPipelineDV_tSQLt.pdb
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\bin\Debug\tSQLtCLR.dll
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\bin\Debug\master.dacpac
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\obj\Debug\SelfBuildPipelineDV_tSQLt.sqlprojResolveAssemblyReference.cache
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\obj\Debug\Model.xml
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\obj\Debug\refactor.xml
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\obj\Debug\postdeploy.sql
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\obj\Debug\predeploy.sql
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\obj\Debug\SelfBuildPipelineDV_tSQLt.dll
+C:\Projects\SelfBuildPipelineDV_tSQLt\SelfBuildPipelineDV_tSQLt\obj\Debug\SelfBuildPipelineDV_tSQLt.pdb
