@@ -1,3 +1,14 @@
+def BranchToPort(String branchName) {
+    def BranchPortMap = [
+        [branch: 'master'   , port: 15565],
+        [branch: 'Release'  , port: 15566],
+        [branch: 'Feature'  , port: 15567],
+        [branch: 'Prototype', port: 15568],
+        [branch: 'HotFix'   , port: 15569]
+    ]
+    BranchPortMap.find { it['branch'] ==  branchName }['port']
+}
+
 def PowerShell(psCmd) {
     bat "powershell.exe -NonInteractive -ExecutionPolicy Bypass -Command \"\$ErrorActionPreference='Stop';$psCmd;EXIT \$global:LastExitCode\""
 }
@@ -9,14 +20,6 @@ def StartContainer() {
     bat "sqlcmd -S localhost,15565 -U sa -P P@ssword1 -Q \"EXEC sp_configure 'show advanced option', '1';RECONFIGURE\""
     bat "sqlcmd -S localhost,15565 -U sa -P P@ssword1 -Q \"EXEC sp_configure 'clr strict security', 0;RECONFIGURE\""
 }
-
-def BranchToPort = [
-    'master'   : 15565,
-    'Release'  : 15566,
-    'Feature'  : 15567,
-    'Prototype': 15568,
-    'HotFix'   : 15569
-]
 
 def DeployDacpac() {
     def SqlPackage   = "C:\\Program Files\\Microsoft SQL Server\\140\\DAC\\bin\\sqlpackage.exe"
