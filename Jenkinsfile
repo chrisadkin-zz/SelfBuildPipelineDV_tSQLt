@@ -34,6 +34,7 @@ node('master') {
         checkout scm
         print env.JOB_NAME
         print env.WORKSPACE
+        print env.GIT_URL
     }
     stage('build dacpac') {
         bat "\"${tool name: 'Default', type: 'msbuild'}\" /p:Configuration=Release"
