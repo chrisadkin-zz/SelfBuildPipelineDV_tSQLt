@@ -31,7 +31,8 @@ def DeployDacpac() {
 
 node('master') {
     stage('git checkout') {
-        print scm.getUserRemoteConfigs()[0].getUrl().tokenize('/')[3].split("\\.")[0]
+        def projectName = build.environment.get("GIT_URL").replaceAll('https://github.com/', '').replaceAll('.git', '')"
+        print $projectName
         git 'https://github.com/chrisadkin/SelfBuildPipelineDV_tSQLt'
     }
     stage('build dacpac') {
