@@ -14,12 +14,9 @@ def PowerShell(psCmd) {
 }
 
 def StartContainer() {
-    timeout(240) {
-        waitUntil {
-            def rs = sh script: 'docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=P@ssword1" --name SQLLinux\${env.BRANCH_NAME} -d -i -p \${BranchToPort(env.BRANCH_NAME)}:1433 microsoft/mssql-server-linux:2017-latest', returnStatus: true
-            return (rs == 0);
-        }
-    }
+    docker.image('microsoft/mssql-server-linux:2017-latest').run("-v ${env.BRANCH_NAME}:/var/opt/mssql -e ACCEPT_EULA=Y -e SA_PASSWORD=P@ssword1 --name SQLLinux${env.BRANCH_NAME} -d -i -p  ${BranchToPort(env.BRANCH_NAME)}:1433")    
+
+    sh script 'while [ $(docker inspect -f '{{.State.Running}}' SQLLinux${env.BRANCH_NAME}) = "false" ]; sleep 1; fi'
     
     bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -Q \"EXEC sp_configure 'clr enabled', 1;EXEC sp_configure 'clr strict security', 0;RECONFIGURE\""
     bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -Q \"EXEC sp_configure 'show advanced option', '1';RECONFIGURE\""
