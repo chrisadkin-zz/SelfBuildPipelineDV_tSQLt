@@ -16,7 +16,7 @@ def PowerShell(psCmd) {
 def StartContainer() {
     timeout(240) {
         waitUntil {
-            def rs = sh script:  'docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=P@ssword1" --name SQLLinux${env.BRANCH_NAME} -d -i -p ${BranchToPort(env.BRANCH_NAME)}:1433 microsoft/mssql-server-linux:2017-latest', returnStatus: true
+            def rs = sh script: 'docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=P@ssword1" --name SQLLinux\${env.BRANCH_NAME} -d -i -p \${BranchToPort(env.BRANCH_NAME)}:1433 microsoft/mssql-server-linux:2017-latest', returnStatus: true
             return (rs == 0);
         }
     }
