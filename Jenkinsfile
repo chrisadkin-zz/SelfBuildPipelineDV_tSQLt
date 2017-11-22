@@ -31,8 +31,9 @@ def DeployDacpac() {
 
 node('master') {
     stage('git checkout') {
+        checkout scm
         print env.JOB_NAME
-        git 'https://github.com/chrisadkin/SelfBuildPipelineDV_tSQLt'
+        print env.WORKSPACE
     }
     stage('build dacpac') {
         bat "\"${tool name: 'Default', type: 'msbuild'}\" /p:Configuration=Release"
