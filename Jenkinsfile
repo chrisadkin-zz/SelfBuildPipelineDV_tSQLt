@@ -31,8 +31,10 @@ def DeployDacpac() {
 
 node('master') {
     stage('git checkout') {
-        def projectName = build.environment.get("GIT_URL").replaceAll('https://github.com/', '').replaceAll('.git', '')
-        print $projectName
+        for(e in env){
+            echo e + " is " + ${e}
+        }
+        
         git 'https://github.com/chrisadkin/SelfBuildPipelineDV_tSQLt'
     }
     stage('build dacpac') {
