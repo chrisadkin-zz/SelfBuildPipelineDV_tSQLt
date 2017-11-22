@@ -31,6 +31,7 @@ def DeployDacpac() {
 
 node('master') {
     stage('git checkout') {
+        print scm.getUserRemoteConfigs()[0].getUrl().tokenize('/')[3].split("\\.")[0]
         git 'https://github.com/chrisadkin/SelfBuildPipelineDV_tSQLt'
     }
     stage('build dacpac') {
