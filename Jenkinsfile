@@ -31,7 +31,7 @@ def DeployDacpac() {
 
 node('master') {
     stage('git checkout') {
-        print ${JOB_NAME}
+        print ${env.JOB_NAME}
         git 'https://github.com/chrisadkin/SelfBuildPipelineDV_tSQLt'
     }
     stage('build dacpac') {
