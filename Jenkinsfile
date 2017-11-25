@@ -42,6 +42,7 @@ node('master') {
 
     stage('start container') {
         StartContainer()
+        PowerShell "while ( -not \$(docker ps -f \"name=SQLLinuxmaster\" -f \"status=running\") ) { Start-Sleep -s 1 }"
     }
 
     stage('deploy dacpac') {
