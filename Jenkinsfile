@@ -15,31 +15,8 @@ def PowerShell(psCmd) {
 
 def StartContainer() {
     docker.image('microsoft/mssql-server-linux:2017-latest').run("-e ACCEPT_EULA=Y -e SA_PASSWORD=P@ssword1 --name SQLLinux${env.BRANCH_NAME} -d -i -p ${BranchToPort(env.BRANCH_NAME)}:1433")    
-    //PowerShell "while ( -not \$(docker ps -f \"name=SQLLinux${env.BRANCH_NAME}\" -f \"status=running\") ) { Start-Sleep -s 1 }"
-    
-    String InstanceNotStarted = "TCP Provider: No connection could be made because the target machine actively refused it"
-    
-    for (i = 0; i < 10; i++) {
-        try {
-            bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -Q \"EXEC sp_configure 'clr enabled', 1;EXEC sp_configure 'clr strict security', 0;RECONFIGURE\""
-            break;
-        }
-        catch(error) {
-            if (i < 9) {
-                if (error.toString().contains(InstanceNotStarted)) {
-                    sleep(1000)
-                }
-                else {
-                    throw exception;
-                }
-            }
-            else {
-                throw exception
-            }
-        }
-    }
-    
-    bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -Q \"EXEC sp_configure 'show advanced option', '1';RECONFIGURE\""
+    PowerShell "while ( -not \$(docker ps -f \"name=SQLLinux${env.BRANCH_NAME}\" -f \"status=running\") ) { Start-Sleep -s 1 }"
+    bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -l 10 -Q \"EXEC sp_configure 'show advanced option', '1';RECONFIGURE\""
     bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -Q \"EXEC sp_configure 'clr strict security', 0;RECONFIGURE\""
 }
 
