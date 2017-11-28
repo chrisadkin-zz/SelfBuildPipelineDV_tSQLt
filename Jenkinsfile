@@ -14,7 +14,7 @@ def PowerShell(psCmd) {
 }
 
 def StartContainer() {
-    docker.image('microsoft/mssql-server-linux:2017-latest').run("-e ACCEPT_EULA=Y -e SA_PASSWORD=P@ssword1 --name SQLLinux${env.BRANCH_NAME} -d -i -p ${BranchToPort(env.BRANCH_NAME)}:1433")    
+    docker.image('microsoft/mssql-server-linux').run("-e ACCEPT_EULA=Y -e SA_PASSWORD=P@ssword1 --name SQLLinux${env.BRANCH_NAME} -d -i -p ${BranchToPort(env.BRANCH_NAME)}:1433")    
     PowerShell "while ( -not \$(docker ps -f \"name=SQLLinux${env.BRANCH_NAME}\" -f \"status=running\") ) { Start-Sleep -s 1 }"
     sleep(10)
     bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -l 30 -Q \"EXEC sp_configure 'show advanced option', '1';RECONFIGURE\""
