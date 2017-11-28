@@ -27,7 +27,7 @@ def StartContainer() {
         catch(error) {
             if (i < 9) {
                 if (error.contains(InstanceNotStarted)) {
-                    PowerShell "Start-Sleep -s 1"
+                    sleep(1000)
                 }
                 else {
                     throw exception;
