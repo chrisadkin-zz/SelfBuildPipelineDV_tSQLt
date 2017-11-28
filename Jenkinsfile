@@ -22,7 +22,7 @@ def StartContainer() {
             bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -Q \"EXEC sp_configure 'clr enabled', 1;EXEC sp_configure 'clr strict security', 0;RECONFIGURE\""
             break;
         }
-        catch {
+        catch(all) {
             PowerShell "Start-Sleep -s 1"
         }
     }
