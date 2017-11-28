@@ -26,7 +26,7 @@ def StartContainer() {
         }
         catch(error) {
             if (i < 9) {
-                if (error.contains(InstanceNotStarted)) {
+                if (error.toString().contains(InstanceNotStarted)) {
                     sleep(1000)
                 }
                 else {
