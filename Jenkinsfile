@@ -16,7 +16,7 @@ def PowerShell(psCmd) {
 def StartContainer() {
     PowerShell "If (\$((docker ps -a --filter \"name=SQLLinux${env.BRANCH_NAME}\").Length) -eq 2) { docker rm -f SQLLinux${env.BRANCH_NAME} }"
     docker.image('microsoft/mssql-server-linux').run("-e ACCEPT_EULA=Y -e SA_PASSWORD=P@ssword1 --name SQLLinux${env.BRANCH_NAME} -d -i -p ${BranchToPort(env.BRANCH_NAME)}:1433")    
-    PowerShell "While (\$((docker logs SQLLinux${env.BRANCH_NAME} | select-string -Pattern \"SQL Server is now ready for client connections\").Length) -eq 0) { Start-Sleep -s 1 }"
+    PowerShell "While (\$((docker logs SQLLinux${env.BRANCH_NAME} | select-string ready | select-string client).Length) -eq 0) { Start-Sleep -s 1 }"
     bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -Q \"EXEC sp_configure 'show advanced option', '1';RECONFIGURE\""
     bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -Q \"EXEC sp_configure 'clr enabled', 1;RECONFIGURE\""
     bat "sqlcmd -S localhost,${BranchToPort(env.BRANCH_NAME)} -U sa -P P@ssword1 -Q \"EXEC sp_configure 'clr strict security', 0;RECONFIGURE\""
