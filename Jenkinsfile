@@ -31,11 +31,10 @@ def DeployDacpac() {
 }
 
 node('master') {
-    stage('git checkout') {
-        checkout scm
-        print env.JOB_NAME
-        print env.WORKSPACE
-        print env.GIT_URL
+    stage('git checkout') {     
+        timeout(time: 5, unit: 'SECONDS') {
+            checkout scm
+        }
     }
     stage('build dacpac') {
         bat "\"${tool name: 'Default', type: 'msbuild'}\" /p:Configuration=Release"
@@ -43,12 +42,16 @@ node('master') {
     }
 
     stage('start container') {
-        StartContainer()
+        timeout(time: 20, unit: 'SECONDS') {
+            StartContainer()
+        }
     }
 
     stage('deploy dacpac') {
         try {
-            DeployDacpac()
+            timeout(time: 60, unit: 'SECONDS') {
+                DeployDacpac()
+            }
         }
         catch (error) {
             throw error
